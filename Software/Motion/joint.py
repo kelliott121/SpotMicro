@@ -34,17 +34,26 @@ class Joint:
         else:
             self.constraints = {"min_duty" : 1500,
                                 "max_duty" : 2500,
-                                "actuation_range" : 180}
+                                "min_angle" : 0,
+                                "max_angle" : 180,
+                                "home" : 90}
         # Update the servo object to reflect the constraints
-        self.servo.set_pulse_width_range(self.constraints["min_duty"],
-                                         self.constraints["max_duty"])
-        self.servo.actuation_range = self.constraints["actuation_range"]
+        self.servo.set_pulse_width_range(self.constraints["min_duty"], self.constraints["max_duty"])
+        self.servo.actuation_range = abs(self.constraints["max_angle"] - self.constraints["min_angle"])
         
     # Used to store config data out to a file
     def store(self):
         with open(self.config_file, 'w') as fp:
             json.dump(self.constraints, fp)
-        
-j = Joint(DummyServo())
-j.constraints["min_duty"] = 1250
-j.store()
+    
+    # Move the joint to the specified angle (relative to home)
+    def move(self, angle):
+        if self.constraints["min_angle"] <= angle <= self.constraints["max_angle"]:
+            newAngle = angle + self.constraints["home"]
+            self.servo.angle = newAngle
+       
+if __name__ == "__main__":
+    j = Joint(DummyServo())
+    j.constraints["min_duty"] = 1250
+    j.store()
+    j.move(-10)

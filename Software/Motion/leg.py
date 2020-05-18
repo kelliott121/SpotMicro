@@ -3,8 +3,9 @@ from segment import Segment
 
 # Class that represents a 3-jointed leg for the SpotMicro robot dog
 class Leg:
-    def __init__(self, leg_name, servos):
+    def __init__(self, leg_name, offset, servos):
         self.leg_name = leg_name
+        self.offset = offset
         self.upper_hip = Joint(servos["upper_hip"], leg_name + "upper_hip.json")
         self.hip = Segment(leg_name + "hip.json")
         self.lower_hip = Joint(servos["lower_hip"], leg_name + "lower_hip.json")

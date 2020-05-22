@@ -24,6 +24,11 @@ class Leg:
         self.femur.store()
         self.knee.store()
         self.tibia.store()
+    
+    def move(self, upper_hip_angle, lower_hip_angle, knee_angle):
+        self.upper_hip.move(upper_hip_angle)
+        self.lower_hip.move(lower_hip_angle)
+        self.knee.move(knee_angle)
 
 if __name__ == "__main__":
     servos = {"upper_hip":DummyServo(),

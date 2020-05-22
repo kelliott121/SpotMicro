@@ -49,6 +49,7 @@ class Joint:
     # Move the joint to the specified angle (relative to home)
     def move(self, angle):
         if self.constraints["min_angle"] <= angle <= self.constraints["max_angle"]:
+            self.angle = angle
             newAngle = angle + self.constraints["home"]
             self.servo.angle = newAngle
        

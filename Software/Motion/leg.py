@@ -6,16 +6,16 @@ from os import makedirs, path
 class Leg:
     def __init__(self, leg_name, offset, servos):
         self.leg_name = leg_name
-        if not path.exists(leg_name):
+        if not path.exists("config/" + leg_name):
             makedirs(leg_name)
         
         self.offset = offset
-        self.upper_hip = Joint(servos["upper_hip"], leg_name + "/upper_hip.json")
-        self.hip = Segment(leg_name + "/hip.json")
-        self.lower_hip = Joint(servos["lower_hip"], leg_name + "/lower_hip.json")
-        self.femur = Segment(leg_name + "/femur.json")
-        self.knee = Joint(servos["knee"], leg_name + "/knee.json")
-        self.tibia = Segment(leg_name + "/tibia.json")
+        self.upper_hip = Joint(servos["upper_hip"], "config/" + leg_name + "/upper_hip.json")
+        self.hip = Segment("config/" + leg_name + "/hip.json")
+        self.lower_hip = Joint(servos["lower_hip"], "config/" + leg_name + "/lower_hip.json")
+        self.femur = Segment("config/" + leg_name + "/femur.json")
+        self.knee = Joint(servos["knee"], "config/" + leg_name + "/knee.json")
+        self.tibia = Segment("config/" + leg_name + "/tibia.json")
         
     def store(self):
         self.upper_hip.store()
@@ -35,7 +35,7 @@ if __name__ == "__main__":
               "lower_hip":DummyServo(),
               "knee":DummyServo()}
 
-    l = Leg("FL", servos)
+    l = Leg("FL", [-75, 150, 0], servos)
     l.store()
     print(l.upper_hip.constraints)
     print(l.hip.constraints)

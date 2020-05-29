@@ -50,7 +50,7 @@ class Joint:
     def move(self, angle):
         if self.constraints["min_angle"] <= angle <= self.constraints["max_angle"]:
             self.angle = angle
-            newAngle = angle + self.constraints["home"]
+            newAngle = angle - self.constraints["min_angle"]
             self.servo.angle = newAngle
        
 if __name__ == "__main__":

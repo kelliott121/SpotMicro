@@ -12,7 +12,7 @@ class Segment:
             self.constraints = json.load(open(config_file, 'r'))
         #Otherwise use generic defaults
         else:
-            self.constraints = {"angle_offset" : 0,
+            self.constraints = {"angle_offset" : [0, 0],
                                 "length" : 0}
         
     # Used to store config data out to a file
